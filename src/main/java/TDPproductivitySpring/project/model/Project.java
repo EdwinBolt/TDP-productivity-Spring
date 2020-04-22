@@ -1,10 +1,6 @@
 package TDPproductivitySpring.project.model;
 
-import TDPproductivitySpring.task.model.Task;
-import com.fasterxml.jackson.annotation.*;
-
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name="project")
@@ -13,7 +9,7 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
-    String name;
+    String projectName;
 //
 //    @OneToMany(mappedBy = "project")
 //    //@JsonIgnoreProperties({"project"})      // deze regel of die hieronder gebruiken
@@ -29,30 +25,28 @@ public class Project {
 
     public Project(int id, String name) {
         this.id = id;
-        this.name = name;
+        this.projectName = name;
     }
 
-    public int getId() {
-        return id;
-    }
+    public int getId() {return id;}
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getProjectName() {
+        return projectName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 
     @Override
     public String toString() {
         return "Project{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", name='" + projectName + '\'' +
                 '}';
     }
 }
