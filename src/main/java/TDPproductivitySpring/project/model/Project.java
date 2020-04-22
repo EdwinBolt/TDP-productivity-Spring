@@ -1,6 +1,8 @@
 package TDPproductivitySpring.project.model;
 
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.util.Date;
 
 @Entity
 @Table(name="project")
@@ -10,6 +12,7 @@ public class Project {
     int id;
 
     String projectName;
+     String deadline;
 //
 //    @OneToMany(mappedBy = "project")
 //    //@JsonIgnoreProperties({"project"})      // deze regel of die hieronder gebruiken
@@ -23,9 +26,10 @@ public class Project {
     public Project() {
     }
 
-    public Project(int id, String name) {
+    public Project(int id, String name, Date deadline) {
         this.id = id;
         this.projectName = name;
+        setDeadline(deadline);
     }
 
     public int getId() {return id;}
@@ -42,11 +46,21 @@ public class Project {
         this.projectName = projectName;
     }
 
+    public String getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(Date deadline) {
+        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
+        this.deadline = dateFormat.format(deadline);
+    }
+
     @Override
     public String toString() {
         return "Project{" +
                 "id=" + id +
-                ", name='" + projectName + '\'' +
+                ", projectName='" + projectName + '\'' +
+                ", deadline=" + deadline +
                 '}';
     }
 }
