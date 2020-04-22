@@ -24,11 +24,15 @@ public class TaskController {
 
     @GetMapping(url)
     public List<Task> findAll(){
+        Iterable<Task> temp = taskService.findAll();
+        System.out.println(temp);
         return (List<Task>)taskService.findAll();
+
     }
 
     @GetMapping(url +"/{id}")
     public Optional<Task> taskById(@PathVariable int id){
+        System.out.println(taskService.findById(id));
         return taskService.findById(id);
     }
 
@@ -42,6 +46,21 @@ public class TaskController {
     public void delete(@PathVariable int id){
         taskService.deleteById(id);
     }
+
+    /*
+    @GetMapping(url +"/{id}")
+    public Optional<Task> taskById(@PathVariable int id){
+        return taskService.findById(id);
+    }
+
+     */
+/*
+    @GetMapping(url+"Proj={name}")
+    public Optional<Task> findByProjectId(@PathVariable String name){
+        return taskService.findByProjectId(name);
+    }
+
+ */
 
 
 

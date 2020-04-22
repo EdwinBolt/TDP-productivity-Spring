@@ -1,23 +1,27 @@
 package TDPproductivitySpring.project.model;
 
 import TDPproductivitySpring.task.model.Task;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name="project")
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
     String name;
+//
+//    @OneToMany(mappedBy = "project")
+//    //@JsonIgnoreProperties({"project"})      // deze regel of die hieronder gebruiken
+//    @JsonManagedReference
 
-    @OneToMany(mappedBy = "project")
-    @JsonManagedReference
-    public List<Task> tasks;
+
+
+    //public List<Task> tasks;
    // public Task task;
 
     public Project() {

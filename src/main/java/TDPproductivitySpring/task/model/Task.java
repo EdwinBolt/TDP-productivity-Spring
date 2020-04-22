@@ -3,12 +3,14 @@ package TDPproductivitySpring.task.model;
 
 import TDPproductivitySpring.project.model.Project;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name="task")
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +20,9 @@ public class Task {
     // String description;
 
     @ManyToOne
-    @JsonBackReference
+//
+//    @JsonBackReference
+    @JoinColumn(name = "project_id")
     public Project project;
 
     public Task() {    }
@@ -27,8 +31,18 @@ public class Task {
     public Task(int id, String name) {
         this.id = id;
         this.name = name;
+        //this.project = project_id;
+    }
+/*
+    public Project getProject() {
+        return project;
     }
 
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+ */
 
     public int getId() {
         return id;
