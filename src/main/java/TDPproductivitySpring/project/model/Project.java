@@ -1,10 +1,7 @@
 package TDPproductivitySpring.project.model;
 
-import TDPproductivitySpring.task.model.Task;
-import com.fasterxml.jackson.annotation.*;
-
 import javax.persistence.*;
-import java.util.List;
+import java.time.LocalTime;
 
 @Entity
 @Table(name="project")
@@ -13,7 +10,8 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
-    String name;
+    String projectName;
+    LocalTime duration;
 //
 //    @OneToMany(mappedBy = "project")
 //    //@JsonIgnoreProperties({"project"})      // deze regel of die hieronder gebruiken
@@ -27,9 +25,18 @@ public class Project {
     public Project() {
     }
 
-    public Project(int id, String name) {
+    public Project(int id, String name, LocalTime duration) {
         this.id = id;
-        this.name = name;
+        this.projectName = name;
+        this.duration = duration;
+    }
+
+    public LocalTime getDuration() {
+        return duration;
+    }
+
+    public void setDuration(LocalTime duration) {
+        this.duration = duration;
     }
 
     public int getId() {
@@ -40,19 +47,21 @@ public class Project {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getProjectName() {
+        return projectName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
+
 
     @Override
     public String toString() {
         return "Project{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", projectName='" + projectName + '\'' +
+                ", duration=" + duration +
                 '}';
     }
 }
