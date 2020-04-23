@@ -38,6 +38,11 @@ public class ProjectController {
         return projectService.save(project);
     }
 
+    @PatchMapping(url+"/{id}")
+    public Project updatePartial(@RequestBody Project project, @PathVariable int id){
+        return projectService.save(project);
+    }
+
     @ResponseStatus(value = HttpStatus.OK)
     @DeleteMapping(url +"/{id}")
     public void delete(@PathVariable int id){
