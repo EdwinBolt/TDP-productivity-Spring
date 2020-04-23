@@ -27,7 +27,6 @@ public class Task {
 //    @JsonBackReference
     @JoinColumn(name = "project_id")
     public Project project;
-
     public Task() {    }
 
     public Task(int id, String name, LocalTime duration, String description, LocalDate deadline, int status, Project project) {
