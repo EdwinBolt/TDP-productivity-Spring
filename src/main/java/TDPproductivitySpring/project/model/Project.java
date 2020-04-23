@@ -39,8 +39,8 @@ public class Project {
     }
 
     public void setDuration(LocalTime duration) {
-        this.duration = duration;
-    }
+        this.duration = duration;}
+
     public Project(int id, String name, Date deadline, LocalTime duration) {
         this.id = id;
         this.projectName = name;
