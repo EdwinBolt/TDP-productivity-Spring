@@ -1,6 +1,7 @@
 package TDPproductivitySpring.project.model;
 
 import javax.persistence.*;
+import java.time.LocalTime;
 import java.text.DateFormat;
 import java.util.Date;
 
@@ -12,6 +13,7 @@ public class Project {
     int id;
 
     String projectName;
+    LocalTime duration;
      String deadline;
 //
 //    @OneToMany(mappedBy = "project")
@@ -26,9 +28,23 @@ public class Project {
     public Project() {
     }
 
-    public Project(int id, String name, Date deadline) {
+    public Project(int id, String name, LocalTime duration) {
         this.id = id;
         this.projectName = name;
+        this.duration = duration;
+    }
+
+    public LocalTime getDuration() {
+        return duration;
+    }
+
+    public void setDuration(LocalTime duration) {
+        this.duration = duration;}
+
+    public Project(int id, String name, Date deadline, LocalTime duration) {
+        this.id = id;
+        this.projectName = name;
+        this.duration = duration;
         setDeadline(deadline);
     }
 
@@ -41,6 +57,8 @@ public class Project {
     public String getProjectName() {
         return projectName;
     }
+
+    
 
     public void setProjectName(String projectName) {
         this.projectName = projectName;
@@ -55,11 +73,13 @@ public class Project {
         this.deadline = dateFormat.format(deadline);
     }
 
+
     @Override
     public String toString() {
         return "Project{" +
                 "id=" + id +
                 ", projectName='" + projectName + '\'' +
+                ", duration=" + duration +
                 ", deadline=" + deadline +
                 '}';
     }
