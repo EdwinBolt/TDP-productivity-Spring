@@ -39,7 +39,13 @@ public class ProjectController {
     }
 
     @PatchMapping(url+"/{id}")
-    public Project updatePartial(@RequestBody Project project, @PathVariable int id){
+    public Project updatePartialByID(@RequestBody Project project, @PathVariable int id){
+        project.setId(id);
+        return projectService.save(project);
+    }
+
+    @PatchMapping(url)
+    public Project updatePartial(@RequestBody Project project){
         return projectService.save(project);
     }
 

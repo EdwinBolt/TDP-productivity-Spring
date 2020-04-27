@@ -1,6 +1,7 @@
 package TDPproductivitySpring.project.model;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.text.DateFormat;
 import java.util.Date;
@@ -69,8 +70,9 @@ public class Project {
     }
 
     public void setDeadline(Date deadline) {
-        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
-        this.deadline = dateFormat.format(deadline);
+        SimpleDateFormat SDFormat = new SimpleDateFormat("yyyy-MM-dd");
+        //DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
+        this.deadline = SDFormat.format(deadline);
     }
 
 
