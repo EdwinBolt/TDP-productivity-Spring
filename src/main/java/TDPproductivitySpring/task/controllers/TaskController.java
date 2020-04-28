@@ -1,5 +1,6 @@
 package TDPproductivitySpring.task.controllers;
 
+import TDPproductivitySpring.project.model.Project;
 import TDPproductivitySpring.task.model.Task;
 import TDPproductivitySpring.task.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,17 @@ public class TaskController {
     public Task update(@RequestBody Task task){
         return taskService.save(task);
         }
+
+    @PatchMapping(url+"/{id}")
+    public Task updatePartialByID(@RequestBody Task task, @PathVariable int id){
+        task.setId(id);
+        return taskService.save(task);
+    }
+
+    @PatchMapping(url)
+    public Task updatePartial(@RequestBody Task task){
+        return taskService.save(task);
+    }
 
     @ResponseStatus(value = HttpStatus.OK)
     @DeleteMapping(url +"/{id}")
