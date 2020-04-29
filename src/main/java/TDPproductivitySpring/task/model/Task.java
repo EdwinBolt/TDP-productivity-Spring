@@ -18,7 +18,7 @@ public class Task {
     int id;
 
     String name;
-    LocalTime duration;
+    int duration;
     String description;
     LocalDate deadline;
     int status;     // to do, in progress, done
@@ -29,7 +29,7 @@ public class Task {
     public Project project;
     public Task() {    }
 
-    public Task(int id, String name, LocalTime duration, String description, LocalDate deadline, int status, Project project) {
+    public Task(int id, String name, int duration, String description, LocalDate deadline, int status, Project project) {
         this.id = id;
         this.name = name;
         this.duration = duration;
@@ -80,11 +80,11 @@ public class Task {
         this.name = name;
     }
 
-    public LocalTime getDuration() {
+    public int getDuration() {
         return duration;
     }
 
-    public void setDuration(LocalTime duration) {
+    public void setDuration(int duration) {
         this.duration = duration;
     }
 
