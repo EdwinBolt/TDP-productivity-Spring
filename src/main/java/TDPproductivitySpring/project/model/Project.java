@@ -1,5 +1,6 @@
 package TDPproductivitySpring.project.model;
 
+import TDPproductivitySpring.task.model.Task;
 import TDPproductivitySpring.users.model.User;
 
 import javax.persistence.*;
@@ -7,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,9 +22,12 @@ public class Project {
     @JoinTable(name = "project_accessed", joinColumns = @JoinColumn(name = "project_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     Set<User> worksOn;
 
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Task> tasks;
+
     String projectName;
     LocalTime duration;
-     String deadline;
+    String deadline;
 //
 //    @OneToMany(mappedBy = "project")
 //    //@JsonIgnoreProperties({"project"})      // deze regel of die hieronder gebruiken
