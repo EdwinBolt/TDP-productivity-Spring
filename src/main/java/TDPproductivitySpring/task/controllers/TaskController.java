@@ -31,8 +31,8 @@ public class TaskController {
 
         List<LocalTime> projectTimes = new ArrayList<>();
 
+/*
 
-//
         for (Task task : temp){
             if (projectTimes.size()>=task.project.getId()){
                 LocalTime currentTime, newTime;
@@ -50,6 +50,7 @@ public class TaskController {
 //            System.out.println("----");
 //            System.out.println(task.project.getId());
         }
+        */
 
         for (LocalTime time:projectTimes){
             System.out.println(time);
