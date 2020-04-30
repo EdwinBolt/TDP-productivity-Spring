@@ -2,13 +2,9 @@ package TDPproductivitySpring.task.model;
 
 
 import TDPproductivitySpring.project.model.Project;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 @Entity
 @Table(name="task")
@@ -21,7 +17,7 @@ public class Task {
     int duration;
     String description;
     LocalDate deadline;
-    int status;     // to do, in progress, done
+    String status;     // to do, in progress, done
 
     @ManyToOne
 //    @JsonBackReference
@@ -29,7 +25,7 @@ public class Task {
     public Project project;
     public Task() {    }
 
-    public Task(int id, String name, int duration, String description, LocalDate deadline, int status, Project project) {
+    public Task(int id, String name, int duration, String description, LocalDate deadline, String status, Project project) {
         this.id = id;
         this.name = name;
         this.duration = duration;
@@ -56,11 +52,11 @@ public class Task {
         this.deadline = deadline;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
