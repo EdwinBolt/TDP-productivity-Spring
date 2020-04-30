@@ -1,10 +1,13 @@
 package TDPproductivitySpring.project.model;
 
+import TDPproductivitySpring.users.model.User;
+
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name="project")
@@ -12,6 +15,10 @@ public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
+
+    @ManyToMany
+    @JoinTable(name = "project_accessed", joinColumns = @JoinColumn(name = "project_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+    Set<User> worksOn;
 
     String projectName;
     LocalTime duration;
