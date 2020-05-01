@@ -1,14 +1,14 @@
 package TDPproductivitySpring.users.controllers;
 
 
-import TDPproductivitySpring.task.model.Task;
 import TDPproductivitySpring.users.model.User;
 import TDPproductivitySpring.users.services.UserService;
-import org.graalvm.compiler.hotspot.nodes.CurrentLockNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -26,6 +26,23 @@ public class UserController {
     @GetMapping(url)
     public List<User> findAll(){
         return (List<User>)userService.findAll();
+    }
+
+
+
+    @GetMapping(url +"/login")      //localhost:8080/user/login?user=user1&password=123
+    public int findByUsernameAndPassword(@RequestParam String user, String password, HttpServletResponse resp){
+
+        User checkUser = userService.findByUsernameAndPassword(user, password);
+        boolean correctLogIn = false;
+        if (checkUser.getPassword().equals(password)) {
+            correctLogIn = true;
+
+            Cookie cookie = new Cookie("userProject", Integer.toString(checkUser.getProject()));
+            resp.addCookie(cookie);
+
+        }
+        return checkUser.getProject();
     }
 
     @PutMapping(url)
