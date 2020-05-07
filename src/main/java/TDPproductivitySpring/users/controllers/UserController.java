@@ -5,8 +5,10 @@ import TDPproductivitySpring.users.model.User;
 import TDPproductivitySpring.users.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -31,18 +33,33 @@ public class UserController {
 
 
     @GetMapping(url +"/login")      //localhost:8080/user/login?user=user1&password=123
-    public int findByUsernameAndPassword(@RequestParam String user, String password, HttpServletResponse resp){
+    public ResponseEntity<Integer> findByUsernameAndPassword(@RequestParam String user, String password, HttpServletResponse resp){
 
         User checkUser = userService.findByUsernameAndPassword(user, password);
+
         boolean correctLogIn = false;
-        if (checkUser.getPassword().equals(password)) {
-            correctLogIn = true;
-
-            Cookie cookie = new Cookie("userProject", Integer.toString(checkUser.getProject()));
-            resp.addCookie(cookie);
-
+        if (checkUser != null){
+            if (checkUser.getPassword().equals(password)) {
+                correctLogIn = true;
+                System.out.println("correct log in");
+            }
         }
-        return checkUser.getProject();
+
+        if (correctLogIn){
+            return new ResponseEntity<>(checkUser.getProject(), HttpStatus.OK);
+        }else
+            return new ResponseEntity<>(-1,HttpStatus.OK);
+/*
+        if(correctLogIn)
+            return new ResponseEntity<Integer>(checkUser.getProject(), HttpStatus.OK) ;
+        else{
+            return new ResponseEntity<String>("fout gegaan", HttpStatus.NOT_FOUND);
+        }
+
+ */
+
+
+
     }
 
     @PutMapping(url)
