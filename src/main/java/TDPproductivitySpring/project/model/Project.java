@@ -1,12 +1,14 @@
 package TDPproductivitySpring.project.model;
 
+import TDPproductivitySpring.projectsByUser.model.ProjectUser;
 import TDPproductivitySpring.task.model.Task;
 import TDPproductivitySpring.users.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
-import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -18,12 +20,16 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
-    @ManyToMany
+/*    @ManyToMany
     @JoinTable(name = "project_accessed", joinColumns = @JoinColumn(name = "project_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-    Set<User> worksOn;
+    Set<User> worksOn;*/
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> tasks;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties({"project"})
+    private List<ProjectUser> users;
 
     String projectName;
     LocalTime duration;
@@ -36,7 +42,7 @@ public class Project {
 
 
     //public List<Task> tasks;
-   // public Task task;
+    // public Task task;
 
     public Project() {
     }
@@ -71,7 +77,7 @@ public class Project {
         return projectName;
     }
 
-    
+
 
     public void setProjectName(String projectName) {
         this.projectName = projectName;
@@ -87,6 +93,13 @@ public class Project {
         this.deadline = SDFormat.format(deadline);
     }
 
+    public List<ProjectUser> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<ProjectUser> users) {
+        this.users = users;
+    }
 
     @Override
     public String toString() {

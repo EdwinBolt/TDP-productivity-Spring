@@ -28,8 +28,6 @@ public class UserController {
         return (List<User>)userService.findAll();
     }
 
-
-
     @GetMapping(url +"/login")      //localhost:8080/user/login?user=user1&password=123
     public int findByUsernameAndPassword(@RequestParam String user, String password, HttpServletResponse resp){
 
@@ -38,11 +36,11 @@ public class UserController {
         if (checkUser.getPassword().equals(password)) {
             correctLogIn = true;
 
-            Cookie cookie = new Cookie("userProject", Integer.toString(checkUser.getProject()));
+            Cookie cookie = new Cookie("userProject", Integer.toString(checkUser.getId()));
             resp.addCookie(cookie);
 
         }
-        return checkUser.getProject();
+        return checkUser.getId();
     }
 
     @PutMapping(url)

@@ -1,8 +1,13 @@
 package TDPproductivitySpring.users.model;
 
 import TDPproductivitySpring.project.model.Project;
+import TDPproductivitySpring.projectsByUser.model.ProjectUser;
+import TDPproductivitySpring.task.model.Task;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,8 +20,12 @@ public class User {
     String username;
     String password;
 
-    @ManyToMany(mappedBy = "worksOn")
-    Set<Project> accessedBy;
+/*    @ManyToMany(mappedBy = "worksOn")
+    Set<Project> accessedBy;*/
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties({"user"})
+    List<ProjectUser> projects;
 
     int project;
 
@@ -63,6 +72,13 @@ public class User {
         this.project = project;
     }
 
+    public List<ProjectUser> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<ProjectUser> projects) {
+        this.projects = projects;
+    }
 
     @Override
     public String toString() {

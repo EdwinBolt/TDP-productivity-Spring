@@ -3,9 +3,11 @@ package TDPproductivitySpring.project.controllers;
 
 import TDPproductivitySpring.project.Services.ProjectService;
 import TDPproductivitySpring.project.model.Project;
-import TDPproductivitySpring.task.model.Task;
+import TDPproductivitySpring.projectsByUser.model.ProjectUser;
+import TDPproductivitySpring.projectsByUser.service.ProjectUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,10 +19,13 @@ public class ProjectController {
     final String url = "/project";
 
     @Autowired private ProjectService projectService;
+    @Autowired private ProjectUserService projectUserService;
 
     @PostMapping(url)
-    public Project create (@RequestBody Project project){
-        return projectService.save(project);
+    public Project create (@RequestBody ProjectUser PU){
+        projectService.save(PU.getProject());
+        projectUserService.save(PU);
+        return PU.getProject();
     }
 
     @GetMapping(url)
