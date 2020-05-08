@@ -27,7 +27,7 @@ public class User {
     @JsonIgnoreProperties({"user"})
     List<ProjectUser> projects;
 
-    int project;
+    //int project;
 
 
     public User() {
@@ -37,7 +37,7 @@ public class User {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.project = project;
+        //this.project = project;
     }
 
     public int getId() {
@@ -64,13 +64,13 @@ public class User {
         this.password = password;
     }
 
-    public int getProject() {
+    /*public int getProject() {
         return project;
     }
 
     public void setProject(int project) {
         this.project = project;
-    }
+    }*/
 
     //only uncomment if project has getUsers and setUsers commented
 /*    public List<ProjectUser> getProjects() {
@@ -85,7 +85,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", project=" + project +
+                /*", project=" + project +*/
                 '}';
     }
 }
