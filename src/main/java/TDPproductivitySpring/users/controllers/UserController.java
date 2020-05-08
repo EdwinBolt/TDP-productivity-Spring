@@ -30,12 +30,11 @@ public class UserController {
         return (List<User>)userService.findAll();
     }
 
-
-
     @GetMapping(url +"/login")      //localhost:8080/user/login?user=user1&password=123
     public ResponseEntity<Integer> findByUsernameAndPassword(@RequestParam String user, String password, HttpServletResponse resp){
 
         User checkUser = userService.findByUsernameAndPassword(user, password);
+
 
         boolean correctLogIn = false;
         if (checkUser != null){
@@ -44,6 +43,7 @@ public class UserController {
                 System.out.println("correct log in");
             }
         }
+
 
         if (correctLogIn){
             return new ResponseEntity<>(checkUser.getProject(), HttpStatus.OK);
@@ -55,6 +55,7 @@ public class UserController {
         else{
             return new ResponseEntity<String>("fout gegaan", HttpStatus.NOT_FOUND);
         }
+
 
  */
 

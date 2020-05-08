@@ -20,9 +20,9 @@ public class Task {
     String status;     // to do, in progress, done
 
     @ManyToOne
-//    @JsonBackReference
     @JoinColumn(name = "project_id")
     public Project project;
+
     public Task() {    }
 
     public Task(int id, String name, int duration, String description, LocalDate deadline, String status, Project project) {

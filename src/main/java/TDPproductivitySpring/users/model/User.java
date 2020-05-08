@@ -1,8 +1,13 @@
 package TDPproductivitySpring.users.model;
 
 import TDPproductivitySpring.project.model.Project;
+import TDPproductivitySpring.projectsByUser.model.ProjectUser;
+import TDPproductivitySpring.task.model.Task;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,10 +20,14 @@ public class User {
     String username;
     String password;
 
-    @ManyToMany(mappedBy = "worksOn")
-    Set<Project> accessedBy;
+/*    @ManyToMany(mappedBy = "worksOn")
+    Set<Project> accessedBy;*/
 
-    int project;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties({"user"})
+    List<ProjectUser> projects;
+
+    //int project;
 
 
     public User() {
@@ -28,7 +37,7 @@ public class User {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.project = project;
+        //this.project = project;
     }
 
     public int getId() {
@@ -55,20 +64,28 @@ public class User {
         this.password = password;
     }
 
-    public int getProject() {
+    /*public int getProject() {
         return project;
     }
 
     public void setProject(int project) {
         this.project = project;
+    }*/
+
+    //only uncomment if project has getUsers and setUsers commented
+/*    public List<ProjectUser> getProjects() {
+        return projects;
     }
 
+    public void setProjects(List<ProjectUser> projects) {
+        this.projects = projects;
+    }*/
 
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", project=" + project +
+                /*", project=" + project +*/
                 '}';
     }
 }
