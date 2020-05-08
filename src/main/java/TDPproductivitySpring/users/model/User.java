@@ -72,13 +72,14 @@ public class User {
         this.project = project;
     }
 
-    public List<ProjectUser> getProjects() {
+    //only uncomment if project has getUsers and setUsers commented
+/*    public List<ProjectUser> getProjects() {
         return projects;
     }
 
     public void setProjects(List<ProjectUser> projects) {
         this.projects = projects;
-    }
+    }*/
 
     @Override
     public String toString() {
