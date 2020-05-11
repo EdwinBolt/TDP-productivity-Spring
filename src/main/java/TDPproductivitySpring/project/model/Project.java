@@ -3,6 +3,7 @@ package TDPproductivitySpring.project.model;
 import TDPproductivitySpring.projectsByUser.model.ProjectUser;
 import TDPproductivitySpring.task.model.Task;
 import TDPproductivitySpring.users.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -25,24 +26,16 @@ public class Project {
     Set<User> worksOn;*/
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Task> tasks;
+    //@JsonIgnoreProperties(value = "project", allowSetters = true)
+    List<Task> tasks;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties({"project"})
-    private List<ProjectUser> users;
+    @JsonIgnoreProperties(value = "project", allowSetters = true)
+    List<ProjectUser> users;
 
     String projectName;
     LocalTime duration;
     String deadline;
-//
-//    @OneToMany(mappedBy = "project")
-//    //@JsonIgnoreProperties({"project"})      // deze regel of die hieronder gebruiken
-//    @JsonManagedReference
-
-
-
-    //public List<Task> tasks;
-    // public Task task;
 
     public Project() {
     }
@@ -98,16 +91,36 @@ public class Project {
     }
 
     public void setUsers(List<ProjectUser> users) {
-        this.users = users;
+        if(this.users == null ){
+            this.users = users;
+        } else {
+            this.users.retainAll(users);
+            this.users.addAll(users);
+        }
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        if(this.tasks == null ){
+            this.tasks = tasks;
+        } else {
+            this.tasks.retainAll(tasks);
+            this.tasks.addAll(tasks);
+        }
     }
 
     @Override
     public String toString() {
         return "Project{" +
                 "id=" + id +
+                ", tasks=" + tasks +
+                ", users=" + users +
                 ", projectName='" + projectName + '\'' +
                 ", duration=" + duration +
-                ", deadline=" + deadline +
+                ", deadline='" + deadline + '\'' +
                 '}';
     }
 }

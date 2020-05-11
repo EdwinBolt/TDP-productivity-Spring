@@ -38,26 +38,30 @@ public class ProjectController {
         return projectService.findById(id);
     }
 
-    @PutMapping(url)
+    /*@PutMapping(url)
     public Project update(@RequestBody ProjectUser PU){
         projectService.save(PU.getProject());
         projectUserService.save(PU);
         return PU.getProject();
-    }
+    }*/
 
     @PatchMapping(url+"/{id}")
-    public Project updatePartialByID(@RequestBody ProjectUser PU, @PathVariable int id){
-        PU.project.setId(id);
-        projectService.save(PU.getProject());
-        projectUserService.save(PU);
-        return PU.getProject();
+    public Project updatePartialByID(@RequestBody Project project, @PathVariable int id){
+        project.setId(id);
+        System.out.println(project);
+        projectService.save(project);
+        /*System.out.println(id);
+        ProjectUser PU = projectUserService.findByProject(projectService.findById(id));
+        System.out.println(PU);
+        projectUserService.save(PU);*/
+        return project;
     }
 
     @PatchMapping(url)
-    public Project updatePartial(@RequestBody ProjectUser PU){
-        projectService.save(PU.getProject());
-        projectUserService.save(PU);
-        return PU.getProject();
+    public Project updatePartial(@RequestBody Project project){
+        projectService.save(project);
+
+        return project;
     }
 
     @ResponseStatus(value = HttpStatus.OK)
