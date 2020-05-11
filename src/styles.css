@@ -1,0 +1,44 @@
+.cdk-overlay-container{
+  z-index:2000;
+}
+
+.basic-container {
+  padding: 30px;
+}
+
+body{
+  margin: 0px;
+}
+
+router-outlet{
+  margin: 0px;
+}
+
+button {
+  margin-right: 10px;
+}
+
+mat-slide-toggle {
+  margin-right: 10px;
+  padding:5px;
+}
+
+footer {
+  position: sticky;
+  bottom:0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.footerClass{
+    position: fixed;
+    bottom: 0px;;
+}
+
+.mat-app-background{
+  height: 86vh;
+}
+
+.mat-body{
+    margin-bottom: 80pt;
+}
