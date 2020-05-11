@@ -40,13 +40,14 @@ public class UserController {
         if (checkUser != null){
             if (checkUser.getPassword().equals(password)) {
                 correctLogIn = true;
-                System.out.println("correct log in");
+                //System.out.println("correct log in");
             }
         }
 
 
+
         if (correctLogIn){
-            return new ResponseEntity<>(checkUser.getProject(), HttpStatus.OK);
+            return new ResponseEntity<>(checkUser.getId(), HttpStatus.OK);
         }else
             return new ResponseEntity<>(-1,HttpStatus.OK);
 /*
