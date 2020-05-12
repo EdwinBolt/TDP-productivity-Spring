@@ -2,17 +2,12 @@ package TDPproductivitySpring.project.model;
 
 import TDPproductivitySpring.projectsByUser.model.ProjectUser;
 import TDPproductivitySpring.task.model.Task;
-import TDPproductivitySpring.users.model.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name="project")
@@ -34,26 +29,26 @@ public class Project {
     List<ProjectUser> users;
 
     String projectName;
-    LocalTime duration;
+    int duration;
     String deadline;
 
     public Project() {
     }
 
-    public Project(int id, String name, LocalTime duration) {
+    public Project(int id, String name, int duration) {
         this.id = id;
         this.projectName = name;
         this.duration = duration;
     }
 
-    public LocalTime getDuration() {
+    public int getDuration() {
         return duration;
     }
 
-    public void setDuration(LocalTime duration) {
+    public void setDuration(int duration) {
         this.duration = duration;}
 
-    public Project(int id, String name, Date deadline, LocalTime duration) {
+    public Project(int id, String name, Date deadline, int duration) {
         this.id = id;
         this.projectName = name;
         this.duration = duration;
