@@ -20,7 +20,7 @@ public class UserController {
 
     @Autowired private UserService userService;
 
-    @PostMapping(url)
+    @PostMapping(url) 
     public User create (@RequestBody User user){
         return userService.save(user);
     }
