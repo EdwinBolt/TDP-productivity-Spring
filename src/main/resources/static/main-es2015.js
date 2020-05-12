@@ -967,7 +967,7 @@ class ProjectListComponent {
             });
             dialogRef.afterClosed().subscribe(result => {
                 if (result != null) {
-                    console.log("Triggered afterclose");
+                    // console.log("Triggered afterclose");
                     this.projectService.patchProject(result.project.id, result.project).subscribe(() => this.reloadAll());
                 }
             });
@@ -977,20 +977,19 @@ class ProjectListComponent {
     durationCalc() {
         var temp = 0;
         this.projects.forEach(projectLoop => {
-            console.log("printing project name: " + projectLoop.projectName);
+            // console.log("printing project name: " + projectLoop.projectName)
             this.tasks.forEach(taskLoop => {
                 if (projectLoop.id === taskLoop.project.id && taskLoop.status != "Closed") {
-                    console.log("Task belongs to this project: " + taskLoop.id);
+                    // console.log("Task belongs to this project: " + taskLoop.id);
                     temp += taskLoop.duration;
                 }
             });
-            console.log("the duration for this project is: " + temp);
-            projectLoop.duration = temp;
-            console.log("Project: " + projectLoop.id + " has a duration of: " + projectLoop.duration);
-            this.projectService.patchProject(projectLoop.id, projectLoop).subscribe(() => this.reloadAll());
+            // console.log("the duration for this project is: "+ temp)
+            this.projectService.patchProject(projectLoop.id, projectLoop).subscribe();
             temp = 0;
         });
         this.tempUser = null;
+        this.projectService.findAll().subscribe(result => this.projects = result);
     }
 }
 ProjectListComponent.ɵfac = function ProjectListComponent_Factory(t) { return new (t || ProjectListComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_project_service__WEBPACK_IMPORTED_MODULE_1__["ProjectService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_dialog__WEBPACK_IMPORTED_MODULE_3__["MatDialog"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_theme_service__WEBPACK_IMPORTED_MODULE_4__["ThemeService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_project_user_service__WEBPACK_IMPORTED_MODULE_5__["ProjectUserService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_login_service__WEBPACK_IMPORTED_MODULE_6__["LoginService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_task_service__WEBPACK_IMPORTED_MODULE_7__["TaskService"])); };
@@ -1263,7 +1262,7 @@ class HomepageComponent {
     ngOnInit() {
     }
     setStorage() {
-        console.log("enter set");
+        // console.log("enter set");
         sessionStorage.setItem('key', '1');
     }
 }
@@ -2698,7 +2697,7 @@ class TaskListComponent {
                 }
                 this.tasks = filter;
                 this.durationCalc(this.tasks);
-                console.log("the total duration of all the tasks= " + this.duration);
+                // console.log("the total duration of all the tasks= " + this.duration)
             });
         });
     }
@@ -3264,7 +3263,7 @@ class UserLoginComponent {
             this.isLogin = true;
         else
             this.isLogin = false;
-        console.log("in onInit xxxx" + this.isLogin);
+        // console.log("in onInit xxxx" + this.isLogin);
     }
     //if register button has been pressed
     newUser() {
@@ -3283,7 +3282,7 @@ class UserLoginComponent {
                     this.loginService.globalLoginId = answer;
                     this.loginService.setLogin();
                     sessionStorage.setItem('loginId', answer.toString());
-                    console.log("loginID = " + this.loginService.globalLoginId);
+                    // console.log("loginID = " + this.loginService.globalLoginId);
                 });
             }
         });
@@ -3303,7 +3302,7 @@ class UserLoginComponent {
                     //this.loginService.globalLoginId = this.LoginId;
                     sessionStorage.setItem('loginId', answer.toString());
                     this.LoginId = answer;
-                    console.log("in login xxxx " + this.isLogin);
+                    // console.log("in login xxxx " + this.isLogin);
                     if (answer == -1) {
                         alert("Login failed. Incorrect credentials");
                     }
@@ -3312,7 +3311,7 @@ class UserLoginComponent {
                         this.isLogin = true;
                         this.loginService.globalLoginId = answer;
                         this.loginService.setLogin();
-                        console.log("loginID = " + this.loginService.globalLoginId);
+                        // console.log("loginID = " + this.loginService.globalLoginId);
                     }
                     this.send();
                 });
@@ -3325,7 +3324,7 @@ class UserLoginComponent {
         this.loginService.globalLoginId = this.logoutId;
         this.loginService.setLogin();
         this.isLogin = false;
-        console.log("in logout xxx " + this.isLogin);
+        // console.log("in logout xxx " + this.isLogin);
         // this.checkLogin()
         this.router.navigate(['home']);
         //this.ngOnInit()
