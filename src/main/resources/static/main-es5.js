@@ -1472,8 +1472,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     var ProjectListComponent = /*#__PURE__*/function () {
       function ProjectListComponent(projectService, dialog, themeService, projectUserService, loginService, taskService) {
-        var _this3 = this;
-
         _classCallCheck(this, ProjectListComponent);
 
         this.projectService = projectService;
@@ -1483,15 +1481,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         this.loginService = loginService;
         this.taskService = taskService;
         this.displayedColumns = ['projectName', 'deadline', 'actions'];
-        this.projectService.findAll().subscribe(function (projects) {
-          return _this3.projects = projects;
-        });
-        this.tasks;
-        this.taskService.findAll().subscribe(function (tasks) {
-          return _this3.tasks = tasks;
-        });
-        this.tempUser;
-        this.projects;
       }
 
       _createClass(ProjectListComponent, [{
@@ -1513,90 +1502,62 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "reloadAll",
         value: function reloadAll() {
-          var _this4 = this;
+          var _this3 = this;
 
           this.taskService.findAll().subscribe(function (tasks) {
-            return _this4.tasks = tasks;
+            return _this3.tasks = tasks;
           });
           this.projectService.findAll().subscribe(function (projects) {
-            _this4.projects = projects;
+            _this3.projects = projects;
             var filter = new Array();
 
-            for (var indexp = 0; indexp < _this4.projects.length; indexp++) {
-              for (var indexu = 0; indexu < _this4.projects[indexp].users.length; indexu++) {
-                if (_this4.projects[indexp].users[indexu].user.id === _this4.userID) {
-                  filter.push(_this4.projects[indexp]);
+            for (var indexp = 0; indexp < _this3.projects.length; indexp++) {
+              for (var indexu = 0; indexu < _this3.projects[indexp].users.length; indexu++) {
+                if (_this3.projects[indexp].users[indexu].user.id === _this3.userID) {
+                  filter.push(_this3.projects[indexp]);
                 }
               }
             }
 
-            _this4.projects = filter;
-
-            _this4.durationCalc();
+            _this3.projects = filter;
           });
         }
       }, {
         key: "delete",
         value: function _delete(id) {
-          var _this5 = this;
+          var _this4 = this;
 
           this.projectService["delete"](id).subscribe(function () {
-            return _this5.reloadAll();
+            return _this4.reloadAll();
           });
         }
       }, {
         key: "editProject",
         value: function editProject(project) {
-          var _this6 = this;
+          var _this5 = this;
 
           this.theme = this.themeService.currentActive();
           this.projectUserService.findAll().subscribe(function (projectUsers) {
             var projectUser = projectUsers.find(function (projectUser) {
-              return projectUser.project.id === project.id && projectUser.user.id === _this6.userID;
+              return projectUser.project.id === project.id && projectUser.user.id === _this5.userID;
             });
 
-            var dialogRef = _this6.dialog.open(_project_modal_project_modal_component__WEBPACK_IMPORTED_MODULE_2__["ProjectModalComponent"], {
+            var dialogRef = _this5.dialog.open(_project_modal_project_modal_component__WEBPACK_IMPORTED_MODULE_2__["ProjectModalComponent"], {
               width: '50%',
               data: {
                 projectEdit: projectUser
               },
-              panelClass: _this6.theme
+              panelClass: _this5.theme
             });
 
             dialogRef.afterClosed().subscribe(function (result) {
               if (result != null) {
                 // console.log("Triggered afterclose");
-                _this6.projectService.patchProject(result.project.id, result.project).subscribe(function () {
-                  return _this6.reloadAll();
+                _this5.projectService.patchProject(result.project.id, result.project).subscribe(function () {
+                  return _this5.reloadAll();
                 });
               }
             });
-          });
-        } // duration function 
-
-      }, {
-        key: "durationCalc",
-        value: function durationCalc() {
-          var _this7 = this;
-
-          var temp = 0;
-          this.projects.forEach(function (projectLoop) {
-            // console.log("printing project name: " + projectLoop.projectName)
-            _this7.tasks.forEach(function (taskLoop) {
-              if (projectLoop.id === taskLoop.project.id && taskLoop.status != "Closed") {
-                // console.log("Task belongs to this project: " + taskLoop.id);
-                temp += taskLoop.duration;
-              }
-            }); // console.log("the duration for this project is: "+ temp)
-
-
-            _this7.projectService.patchProject(projectLoop.id, projectLoop).subscribe();
-
-            temp = 0;
-          });
-          this.tempUser = null;
-          this.projectService.findAll().subscribe(function (result) {
-            return _this7.projects = result;
           });
         }
       }]);
@@ -3003,31 +2964,31 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "reloadAll",
         value: function reloadAll() {
-          var _this8 = this;
+          var _this6 = this;
 
           this.projectUserService.findAll().subscribe(function (projectUsers) {
             var filterP = new Array();
 
             for (var i = 0; i < projectUsers.length; i++) {
               // console.log("User Id list printout: " + projectUsers[i].user.id)
-              if (projectUsers[i].user.id === _this8.userID) {
+              if (projectUsers[i].user.id === _this6.userID) {
                 filterP.push(projectUsers[i].project.id);
               }
             }
 
-            _this8.projectIDs = filterP; //filter all tasks to projects connected to the current user
+            _this6.projectIDs = filterP; //filter all tasks to projects connected to the current user
 
-            _this8.taskService.findAll().subscribe(function (tasks) {
-              _this8.tasks = tasks;
+            _this6.taskService.findAll().subscribe(function (tasks) {
+              _this6.tasks = tasks;
               var filterT = new Array();
 
-              for (var _i = 0; _i < _this8.tasks.length; _i++) {
-                if (_this8.projectIDs.includes(_this8.tasks[_i].project.id) && _this8.tasks[_i].status != "Closed") {
-                  filterT.push(_this8.tasks[_i]);
+              for (var _i = 0; _i < _this6.tasks.length; _i++) {
+                if (_this6.projectIDs.includes(_this6.tasks[_i].project.id) && _this6.tasks[_i].status != "Closed") {
+                  filterT.push(_this6.tasks[_i]);
                 }
               }
 
-              _this8.tasks = filterT.sort(function (a, b) {
+              _this6.tasks = filterT.sort(function (a, b) {
                 return a.deadline > b.deadline ? 1 : -1;
               });
             });
@@ -3036,36 +2997,36 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "delete",
         value: function _delete(id) {
-          var _this9 = this;
+          var _this7 = this;
 
           this.taskService["delete"](id).subscribe(function () {
-            return _this9.reloadAll();
+            return _this7.reloadAll();
           });
         }
       }, {
         key: "startTask",
         value: function startTask(startedTask) {
-          var _this10 = this;
+          var _this8 = this;
 
           startedTask.status = "Started";
           this.taskService.patchTask(startedTask.id, startedTask).subscribe(function () {
-            return _this10.reloadAll();
+            return _this8.reloadAll();
           });
         }
       }, {
         key: "closeTask",
         value: function closeTask(closedTask) {
-          var _this11 = this;
+          var _this9 = this;
 
           closedTask.status = "Closed";
           this.taskService.patchTask(closedTask.id, closedTask).subscribe(function () {
-            return _this11.reloadAll();
+            return _this9.reloadAll();
           });
         }
       }, {
         key: "editTask",
         value: function editTask(task) {
-          var _this12 = this;
+          var _this10 = this;
 
           this.theme = this.themeService.currentActive();
           var dialogRef = this.dialog.open(_task_components_task_modal_task_modal_component__WEBPACK_IMPORTED_MODULE_3__["TaskModalComponent"], {
@@ -3076,8 +3037,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             panelClass: this.theme
           });
           dialogRef.afterClosed().subscribe(function (result) {
-            _this12.taskService.patchTask(result.id, result).subscribe(function () {
-              return _this12.reloadAll();
+            _this10.taskService.patchTask(result.id, result).subscribe(function () {
+              return _this10.reloadAll();
             });
           });
         }
@@ -3346,33 +3307,33 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "reloadAll",
         value: function reloadAll() {
-          var _this13 = this;
+          var _this11 = this;
 
           this.projectService.findAll().subscribe(function (projects) {
-            _this13.projects = projects;
+            _this11.projects = projects;
             var filter = new Array();
 
-            for (var indexp = 0; indexp < _this13.projects.length; indexp++) {
-              for (var indexu = 0; indexu < _this13.projects[indexp].users.length; indexu++) {
-                if (_this13.projects[indexp].users[indexu].user.id === _this13.userID) {
-                  filter.push(_this13.projects[indexp]);
+            for (var indexp = 0; indexp < _this11.projects.length; indexp++) {
+              for (var indexu = 0; indexu < _this11.projects[indexp].users.length; indexu++) {
+                if (_this11.projects[indexp].users[indexu].user.id === _this11.userID) {
+                  filter.push(_this11.projects[indexp]);
                 }
               }
             }
 
-            _this13.filteredProjects = filter;
+            _this11.filteredProjects = filter;
           });
         }
       }, {
         key: "priority",
         value: function priority() {
-          var _this14 = this;
+          var _this12 = this;
 
           this.taskService.findAll().subscribe(function (tasks) {
-            _this14.important = tasks.sort(function (a, b) {
+            _this12.important = tasks.sort(function (a, b) {
               return a.deadline > b.deadline ? 1 : -1;
             });
-            _this14.important = _this14.important.slice(0, 2);
+            _this12.important = _this12.important.slice(0, 2);
           });
         }
       }, {
@@ -4332,15 +4293,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "reloadAll",
         value: function reloadAll() {
-          var _this15 = this;
+          var _this13 = this;
 
           this.taskService.findAll().subscribe(function (tasks) {
             // Stukje code dat filtered en sorteerd voor new
             var newfilteredTasks = tasks.filter(function (task) {
-              return task.project.id === _this15.selectedProjectID;
+              return task.project.id === _this13.selectedProjectID;
             });
             newfilteredTasks = newfilteredTasks.filter(function (task) {
-              return task.duration <= _this15.selectedTimeWindow;
+              return task.duration <= _this13.selectedTimeWindow;
             });
             newfilteredTasks = newfilteredTasks.filter(function (task) {
               return task.status === "New";
@@ -4351,15 +4312,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             newfilteredTasks.sort(function (a, b) {
               return a.deadline > b.deadline ? 1 : -1;
             });
-            _this15.newTasks = newfilteredTasks;
+            _this13.newTasks = newfilteredTasks;
             /* .slice(0,4) */
             // Stukje code dat filtered en sorteerd voor started
 
             var startedfilteredTasks = tasks.filter(function (task) {
-              return task.project.id === _this15.selectedProjectID;
+              return task.project.id === _this13.selectedProjectID;
             });
             startedfilteredTasks = startedfilteredTasks.filter(function (task) {
-              return task.duration <= _this15.selectedTimeWindow;
+              return task.duration <= _this13.selectedTimeWindow;
             });
             startedfilteredTasks = startedfilteredTasks.filter(function (task) {
               return task.status === "Started";
@@ -4370,43 +4331,43 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             startedfilteredTasks.sort(function (a, b) {
               return a.deadline > b.deadline ? 1 : -1;
             });
-            _this15.startedTasks = startedfilteredTasks;
+            _this13.startedTasks = startedfilteredTasks;
             /* .slice(0,4) */
           });
         }
       }, {
         key: "delete",
         value: function _delete(id) {
-          var _this16 = this;
+          var _this14 = this;
 
           this.taskService["delete"](id).subscribe(function () {
-            return _this16.reloadAll();
+            return _this14.reloadAll();
           });
         }
       }, {
         key: "startTask",
         value: function startTask(startedTask) {
-          var _this17 = this;
+          var _this15 = this;
 
           startedTask.status = "Started";
           this.taskService.patchTask(startedTask.id, startedTask).subscribe(function () {
-            return _this17.reloadAll();
+            return _this15.reloadAll();
           });
         }
       }, {
         key: "closeTask",
         value: function closeTask(closedTask) {
-          var _this18 = this;
+          var _this16 = this;
 
           closedTask.status = "Closed";
           this.taskService.patchTask(closedTask.id, closedTask).subscribe(function () {
-            return _this18.reloadAll();
+            return _this16.reloadAll();
           });
         }
       }, {
         key: "editTask",
         value: function editTask(task) {
-          var _this19 = this;
+          var _this17 = this;
 
           this.theme = this.themeService.currentActive();
           var dialogRef = this.dialog.open(_task_components_task_modal_task_modal_component__WEBPACK_IMPORTED_MODULE_3__["TaskModalComponent"], {
@@ -4417,8 +4378,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             panelClass: this.theme
           });
           dialogRef.afterClosed().subscribe(function (result) {
-            _this19.taskService.patchTask(result.id, result).subscribe(function () {
-              return _this19.reloadAll();
+            _this17.taskService.patchTask(result.id, result).subscribe(function () {
+              return _this17.reloadAll();
             });
           });
         }
@@ -4744,16 +4705,16 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "save",
         value: function save() {
-          var _this20 = this;
+          var _this18 = this;
 
           this.taskService.save(this.task).subscribe(function () {
-            return _this20.taskList.reloadAll();
+            return _this18.taskList.reloadAll();
           });
         }
       }, {
         key: "newTask",
         value: function newTask() {
-          var _this21 = this;
+          var _this19 = this;
 
           this.theme = this.themeService.currentActive();
           var dialogRef = this.dialog.open(_task_modal_task_modal_component__WEBPACK_IMPORTED_MODULE_4__["TaskModalComponent"], {
@@ -4765,10 +4726,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           });
           dialogRef.afterClosed().subscribe(function (result) {
             if (result != null) {
-              _this21.taskService.save(result).subscribe(function () {
-                _this21.taskList.reloadAll();
+              _this19.taskService.save(result).subscribe(function () {
+                _this19.taskList.reloadAll();
 
-                _this21.clear();
+                _this19.clear();
               });
             }
           });
@@ -5248,32 +5209,32 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "reloadAll",
         value: function reloadAll() {
-          var _this22 = this;
+          var _this20 = this;
 
           this.projectUserService.findAll().subscribe(function (projectUsers) {
             var filterP = new Array();
 
             for (var i = 0; i < projectUsers.length; i++) {
-              if (projectUsers[i].user.id === _this22.userID) {
+              if (projectUsers[i].user.id === _this20.userID) {
                 filterP.push(projectUsers[i].project.id);
               }
             }
 
-            _this22.projectIDs = filterP; //filter all tasks to projects connected to the current user
+            _this20.projectIDs = filterP; //filter all tasks to projects connected to the current user
 
-            _this22.taskService.findAll().subscribe(function (tasks) {
-              _this22.tasks = tasks;
+            _this20.taskService.findAll().subscribe(function (tasks) {
+              _this20.tasks = tasks;
               var filter = new Array();
 
-              for (var _i2 = 0; _i2 < _this22.tasks.length; _i2++) {
-                if (_this22.projectIDs.includes(_this22.tasks[_i2].project.id)) {
-                  filter.push(_this22.tasks[_i2]);
+              for (var _i2 = 0; _i2 < _this20.tasks.length; _i2++) {
+                if (_this20.projectIDs.includes(_this20.tasks[_i2].project.id)) {
+                  filter.push(_this20.tasks[_i2]);
                 }
               }
 
-              _this22.tasks = filter;
+              _this20.tasks = filter;
 
-              _this22.durationCalc(_this22.tasks); // console.log("the total duration of all the tasks= " + this.duration)
+              _this20.durationCalc(_this20.tasks); // console.log("the total duration of all the tasks= " + this.duration)
 
             });
           });
@@ -5281,36 +5242,36 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "delete",
         value: function _delete(id) {
-          var _this23 = this;
+          var _this21 = this;
 
           this.taskService["delete"](id).subscribe(function () {
-            return _this23.reloadAll();
+            return _this21.reloadAll();
           });
         }
       }, {
         key: "startTask",
         value: function startTask(startedTask) {
-          var _this24 = this;
+          var _this22 = this;
 
           startedTask.status = "Started";
           this.taskService.patchTask(startedTask.id, startedTask).subscribe(function () {
-            return _this24.reloadAll();
+            return _this22.reloadAll();
           });
         }
       }, {
         key: "closeTask",
         value: function closeTask(closedTask) {
-          var _this25 = this;
+          var _this23 = this;
 
           closedTask.status = "Closed";
           this.taskService.patchTask(closedTask.id, closedTask).subscribe(function () {
-            return _this25.reloadAll();
+            return _this23.reloadAll();
           });
         }
       }, {
         key: "editTask",
         value: function editTask(task) {
-          var _this26 = this;
+          var _this24 = this;
 
           this.theme = this.themeService.currentActive();
           var dialogRef = this.dialog.open(_task_modal_task_modal_component__WEBPACK_IMPORTED_MODULE_2__["TaskModalComponent"], {
@@ -5322,8 +5283,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           });
           dialogRef.afterClosed().subscribe(function (result) {
             if (result != null) {
-              _this26.taskService.patchTask(result.id, result).subscribe(function () {
-                return _this26.reloadAll();
+              _this24.taskService.patchTask(result.id, result).subscribe(function () {
+                return _this24.reloadAll();
               });
             }
           });
@@ -5331,12 +5292,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "durationCalc",
         value: function durationCalc(selectedTasks) {
-          var _this27 = this;
+          var _this25 = this;
 
           this.tempTasks = this.tempTasks;
           selectedTasks.forEach(function (element) {
             if (element.status != "Closed") {
-              _this27.temp += element.duration;
+              _this25.temp += element.duration;
             }
           });
           this.duration = this.temp;
@@ -5641,18 +5602,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "reloadAll",
         value: function reloadAll() {
-          var _this28 = this;
+          var _this26 = this;
 
           this.projectUserService.findAll().subscribe(function (projectUsers) {
             var filterP = new Array();
 
             for (var i = 0; i < projectUsers.length; i++) {
-              if (projectUsers[i].user.id === _this28.userID) {
+              if (projectUsers[i].user.id === _this26.userID) {
                 filterP.push(projectUsers[i].project);
               }
             }
 
-            _this28.projects = filterP;
+            _this26.projects = filterP;
           });
         }
       }]);
@@ -6194,12 +6155,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(ToolbarComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this29 = this;
+          var _this27 = this;
 
           this.isDarkTheme = this.themeService.isDarkTheme;
           this.loginService.setLogin();
           this.loginService.getLogin().subscribe(function (isLogin) {
-            return _this29.isLogin = isLogin;
+            return _this27.isLogin = isLogin;
           });
           this.checkLogin();
         }
@@ -6465,12 +6426,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(UserLoginComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this30 = this;
+          var _this28 = this;
 
           this.LoginId = parseInt(sessionStorage.getItem('loginId'));
           this.logoutId;
           this.loginService.getLogin().subscribe(function (isLogin) {
-            return _this30.isLogin = isLogin;
+            return _this28.isLogin = isLogin;
           });
           if (this.LoginId > 0) this.isLogin = true;else this.isLogin = false; // console.log("in onInit xxxx" + this.isLogin);
         } //if register button has been pressed
@@ -6478,7 +6439,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "newUser",
         value: function newUser() {
-          var _this31 = this;
+          var _this29 = this;
 
           this.theme = this.themeService.currentActive();
           var dialogRef = this.dialog.open(_user_modal_user_modal_component__WEBPACK_IMPORTED_MODULE_2__["UserModalComponent"], {
@@ -6491,14 +6452,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           });
           dialogRef.afterClosed().subscribe(function (result) {
             if (result != null) {
-              _this31.userService.save(result).subscribe();
+              _this29.userService.save(result).subscribe();
 
-              _this31.userService.login(result).subscribe(function (answer) {
+              _this29.userService.login(result).subscribe(function (answer) {
                 //this.LoginId =  answer;
                 //this.loginService.globalLoginId = this.LoginId; 
-                _this31.loginService.globalLoginId = answer;
+                _this29.loginService.globalLoginId = answer;
 
-                _this31.loginService.setLogin();
+                _this29.loginService.setLogin();
 
                 sessionStorage.setItem('loginId', answer.toString()); // console.log("loginID = " + this.loginService.globalLoginId);
               });
@@ -6509,7 +6470,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "loginUser",
         value: function loginUser() {
-          var _this32 = this;
+          var _this30 = this;
 
           this.theme = this.themeService.currentActive();
           var dialogRef = this.dialog.open(_user_modal_user_modal_component__WEBPACK_IMPORTED_MODULE_2__["UserModalComponent"], {
@@ -6522,25 +6483,25 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           });
           dialogRef.afterClosed().subscribe(function (result) {
             if (result != null) {
-              _this32.userService.login(result).subscribe(function (answer) {
+              _this30.userService.login(result).subscribe(function (answer) {
                 //this.LoginId =  answer;
                 //this.loginService.globalLoginId = this.LoginId;
                 sessionStorage.setItem('loginId', answer.toString());
-                _this32.LoginId = answer; // console.log("in login xxxx " + this.isLogin);
+                _this30.LoginId = answer; // console.log("in login xxxx " + this.isLogin);
 
                 if (answer == -1) {
                   alert("Login failed. Incorrect credentials");
                 } else {
-                  _this32.router.navigate(['select']);
+                  _this30.router.navigate(['select']);
 
-                  _this32.isLogin = true;
-                  _this32.loginService.globalLoginId = answer;
+                  _this30.isLogin = true;
+                  _this30.loginService.globalLoginId = answer;
 
-                  _this32.loginService.setLogin(); // console.log("loginID = " + this.loginService.globalLoginId);
+                  _this30.loginService.setLogin(); // console.log("loginID = " + this.loginService.globalLoginId);
 
                 }
 
-                _this32.send();
+                _this30.send();
               });
             }
           });
@@ -6925,10 +6886,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "reloadAll",
         value: function reloadAll() {
-          var _this33 = this;
+          var _this31 = this;
 
           this.userService.findAll().subscribe(function (users) {
-            _this33.users = users;
+            _this31.users = users;
           }); //this.projectService.findAll().subscribe(projects => this.projects = projects);
         }
       }, {

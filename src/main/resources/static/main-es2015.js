@@ -919,11 +919,6 @@ class ProjectListComponent {
         this.loginService = loginService;
         this.taskService = taskService;
         this.displayedColumns = ['projectName', 'deadline', 'actions'];
-        this.projectService.findAll().subscribe(projects => this.projects = projects);
-        this.tasks;
-        this.taskService.findAll().subscribe(tasks => this.tasks = tasks);
-        this.tempUser;
-        this.projects;
     }
     ngOnInit() {
         this.users;
@@ -950,7 +945,6 @@ class ProjectListComponent {
                 }
             }
             this.projects = filter;
-            this.durationCalc();
         });
     }
     delete(id) {
@@ -972,24 +966,6 @@ class ProjectListComponent {
                 }
             });
         });
-    }
-    // duration function 
-    durationCalc() {
-        var temp = 0;
-        this.projects.forEach(projectLoop => {
-            // console.log("printing project name: " + projectLoop.projectName)
-            this.tasks.forEach(taskLoop => {
-                if (projectLoop.id === taskLoop.project.id && taskLoop.status != "Closed") {
-                    // console.log("Task belongs to this project: " + taskLoop.id);
-                    temp += taskLoop.duration;
-                }
-            });
-            // console.log("the duration for this project is: "+ temp)
-            this.projectService.patchProject(projectLoop.id, projectLoop).subscribe();
-            temp = 0;
-        });
-        this.tempUser = null;
-        this.projectService.findAll().subscribe(result => this.projects = result);
     }
 }
 ProjectListComponent.ɵfac = function ProjectListComponent_Factory(t) { return new (t || ProjectListComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_project_service__WEBPACK_IMPORTED_MODULE_1__["ProjectService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_dialog__WEBPACK_IMPORTED_MODULE_3__["MatDialog"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_theme_service__WEBPACK_IMPORTED_MODULE_4__["ThemeService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_project_user_service__WEBPACK_IMPORTED_MODULE_5__["ProjectUserService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_login_service__WEBPACK_IMPORTED_MODULE_6__["LoginService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_task_service__WEBPACK_IMPORTED_MODULE_7__["TaskService"])); };
