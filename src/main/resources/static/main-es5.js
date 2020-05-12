@@ -1565,7 +1565,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
             dialogRef.afterClosed().subscribe(function (result) {
               if (result != null) {
-                // console.log("Triggered afterclose");
+                console.log("Triggered afterclose");
+
                 _this6.projectService.patchProject(result.project.id, result.project).subscribe(function () {
                   return _this6.reloadAll();
                 });
@@ -1581,23 +1582,26 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           var temp = 0;
           this.projects.forEach(function (projectLoop) {
-            // console.log("printing project name: " + projectLoop.projectName)
+            console.log("printing project name: " + projectLoop.projectName);
+
             _this7.tasks.forEach(function (taskLoop) {
               if (projectLoop.id === taskLoop.project.id && taskLoop.status != "Closed") {
-                // console.log("Task belongs to this project: " + taskLoop.id);
+                console.log("Task belongs to this project: " + taskLoop.id);
                 temp += taskLoop.duration;
               }
-            }); // console.log("the duration for this project is: "+ temp)
+            });
 
+            console.log("the duration for this project is: " + temp);
+            projectLoop.duration = temp;
+            console.log("Project: " + projectLoop.id + " has a duration of: " + projectLoop.duration);
 
-            _this7.projectService.patchProject(projectLoop.id, projectLoop).subscribe();
+            _this7.projectService.patchProject(projectLoop.id, projectLoop).subscribe(function () {
+              return _this7.reloadAll();
+            });
 
             temp = 0;
           });
           this.tempUser = null;
-          this.projectService.findAll().subscribe(function (result) {
-            return _this7.projects = result;
-          });
         }
       }]);
 
@@ -2196,7 +2200,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "setStorage",
         value: function setStorage() {
-          // console.log("enter set");
+          console.log("enter set");
           sessionStorage.setItem('key', '1');
         }
       }]);
@@ -5273,8 +5277,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
               _this22.tasks = filter;
 
-              _this22.durationCalc(_this22.tasks); // console.log("the total duration of all the tasks= " + this.duration)
+              _this22.durationCalc(_this22.tasks);
 
+              console.log("the total duration of all the tasks= " + _this22.duration);
             });
           });
         }
@@ -6472,7 +6477,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           this.loginService.getLogin().subscribe(function (isLogin) {
             return _this30.isLogin = isLogin;
           });
-          if (this.LoginId > 0) this.isLogin = true;else this.isLogin = false; // console.log("in onInit xxxx" + this.isLogin);
+          if (this.LoginId > 0) this.isLogin = true;else this.isLogin = false;
+          console.log("in onInit xxxx" + this.isLogin);
         } //if register button has been pressed
 
       }, {
@@ -6500,7 +6506,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                 _this31.loginService.setLogin();
 
-                sessionStorage.setItem('loginId', answer.toString()); // console.log("loginID = " + this.loginService.globalLoginId);
+                sessionStorage.setItem('loginId', answer.toString());
+                console.log("loginID = " + _this31.loginService.globalLoginId);
               });
             }
           });
@@ -6526,7 +6533,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 //this.LoginId =  answer;
                 //this.loginService.globalLoginId = this.LoginId;
                 sessionStorage.setItem('loginId', answer.toString());
-                _this32.LoginId = answer; // console.log("in login xxxx " + this.isLogin);
+                _this32.LoginId = answer;
+                console.log("in login xxxx " + _this32.isLogin);
 
                 if (answer == -1) {
                   alert("Login failed. Incorrect credentials");
@@ -6536,8 +6544,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                   _this32.isLogin = true;
                   _this32.loginService.globalLoginId = answer;
 
-                  _this32.loginService.setLogin(); // console.log("loginID = " + this.loginService.globalLoginId);
+                  _this32.loginService.setLogin();
 
+                  console.log("loginID = " + _this32.loginService.globalLoginId);
                 }
 
                 _this32.send();
@@ -6552,8 +6561,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           this.LoginId = this.logoutId;
           this.loginService.globalLoginId = this.logoutId;
           this.loginService.setLogin();
-          this.isLogin = false; // console.log("in logout xxx " + this.isLogin);
-          // this.checkLogin()
+          this.isLogin = false;
+          console.log("in logout xxx " + this.isLogin); // this.checkLogin()
 
           this.router.navigate(['home']); //this.ngOnInit()
         } //function that sends the observable to login service 
