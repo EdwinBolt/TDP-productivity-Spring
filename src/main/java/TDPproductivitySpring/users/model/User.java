@@ -12,8 +12,9 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name="user")
+@Table(name="userTable")
 @JsonIgnoreProperties(value = {"password", "projects"}, allowSetters = true)
+
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +27,9 @@ public class User {
     Set<Project> accessedBy;*/
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties(value="user", allowSetters = true)
+
+    @JsonIgnoreProperties(value="userTable", allowSetters = true)
+
     List<ProjectUser> projects;
 
     //int project;
